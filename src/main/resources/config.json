@@ -1,0 +1,9 @@
+{
+  "s3": {
+    "bucket": "andreyka26-bucket01"
+  },
+  "dynamo_db": {
+    "table": "sample_table"
+  },
+  "region": "us-west-1"
+}
