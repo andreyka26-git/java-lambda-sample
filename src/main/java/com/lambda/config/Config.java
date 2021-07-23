@@ -13,24 +13,7 @@ import java.io.InputStream;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Config {
-    public static Config loadFromFile(String resourceFileName) {
-        Logger logger = LoggerFactory.getLogger(Config.class);
 
-        logger.info("Started read config");
-        ClassLoader classLoader = S3DataSource.Utils.class.getClassLoader();
-
-        try (InputStream is = classLoader.getResourceAsStream(resourceFileName)) {
-            String json = IOUtils.toString(is);
-            ObjectMapper mapper = new ObjectMapper();
-            TypeReference<Config> typeRef = new TypeReference<Config>(){};
-
-            Config config = mapper.readValue(json, typeRef);
-            return config;
-        } catch (Exception ex) {
-            logger.error("Cannot read config." + ex);
-            return null;
-        }
-    }
 
     @JsonProperty("s3")
     private S3Config s3;
@@ -51,5 +34,17 @@ public class Config {
 
     public String getRegion() {
         return region;
+    }
+
+    public void setS3(S3Config s3) {
+        this.s3 = s3;
+    }
+
+    public void setDynamoDb(DynamoDbConfig dynamoDb) {
+        this.dynamoDb = dynamoDb;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 }

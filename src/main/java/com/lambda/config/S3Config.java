@@ -11,4 +11,8 @@ public class S3Config {
     public String getBucket() {
         return bucket;
     }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
+    }
 }

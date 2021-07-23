@@ -4,18 +4,15 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.*;
 import com.lambda.config.Config;
+import com.lambda.config.ConfigFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DynamoSeeder {
-    private final static Config config = Config.loadFromFile("config.json");
+    private final Config config = ConfigFactory.loadFromFile("config.json");
 
-    public static void main(String[] args) throws InterruptedException {
-        setUpDatabase();
-    }
-
-    private static void setUpDatabase() throws InterruptedException {
+    public void setUpDatabase() throws InterruptedException {
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
                 //.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", Consts.AWS_REGION))
                 .withRegion(config.getRegion())
