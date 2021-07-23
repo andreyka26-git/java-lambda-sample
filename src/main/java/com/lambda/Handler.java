@@ -3,6 +3,7 @@ package com.lambda;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -49,7 +50,13 @@ public class Handler implements RequestHandler<Map<String, String>, String> {
                 .withRegion(config.getRegion())
                 .build();
 
-        dynamoMapper = new DynamoDBMapper(dynamoClient);
+        DynamoDBMapperConfig mapperConfig = new DynamoDBMapperConfig.Builder()
+                .withTableNameOverride(DynamoDBMapperConfig
+                        .TableNameOverride
+                        .withTableNameReplacement(config.getDynamoDb().getTable()))
+                .build();
+
+        dynamoMapper = new DynamoDBMapper(dynamoClient, mapperConfig);
     }
 
     @Override
@@ -85,6 +92,7 @@ public class Handler implements RequestHandler<Map<String, String>, String> {
             }
 
             DynamoObject obj = new DynamoObject(ID, countAggregation, json, quantityAggregation);
+
             dropIdExists(ID);
             addToDynamo(obj);
 

@@ -2,19 +2,13 @@ package com.lambda.infrastructure;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+@DynamoDBTable(tableName = "")
 public class DynamoObject {
-
-    @DynamoDBHashKey(attributeName="Id")
     private int id;
-
-    @DynamoDBAttribute(attributeName="Count")
     private int count;
-
-    @DynamoDBAttribute(attributeName="Json")
     private String json;
-
-    @DynamoDBAttribute(attributeName="Quantity")
     private int quantity;
 
     public DynamoObject(int id, int count, String json, int quantity) {
@@ -24,32 +18,40 @@ public class DynamoObject {
         this.quantity = quantity;
     }
 
+    public DynamoObject() {
+        // used for dynamo mapper
+    }
+
+    @DynamoDBHashKey(attributeName="Id")
     public int getId() {
         return id;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public String getJson() {
-        return json;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    @DynamoDBAttribute(attributeName="Count")
+    public int getCount() {
+        return count;
+    }
+
     public void setCount(int count) {
         this.count = count;
     }
 
+    @DynamoDBAttribute(attributeName="Json")
+    public String getJson() {
+        return json;
+    }
+
     public void setJson(String json) {
         this.json = json;
+    }
+
+    @DynamoDBAttribute(attributeName="Quantity")
+    public int getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(int quantity) {

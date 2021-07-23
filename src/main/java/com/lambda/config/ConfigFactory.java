@@ -15,7 +15,7 @@ public class ConfigFactory {
     private static Logger logger = LoggerFactory.getLogger(ConfigFactory.class);
 
     public static Config loadFromFile(String resourceFileName) {
-        ClassLoader classLoader = S3DataSource.Utils.class.getClassLoader();
+        ClassLoader classLoader = Config.class.getClassLoader();
 
         try (InputStream is = classLoader.getResourceAsStream(resourceFileName)) {
             String json = IOUtils.toString(is, StandardCharsets.UTF_8);
